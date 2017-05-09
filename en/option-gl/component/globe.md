@@ -2,26 +2,25 @@
 {{ target: component-globe }}
 
 # globe(Object)
-
-Earth components. Providing assembly drawing of the earth and the corresponding coordinates, developers can display a three-dimensional scattergram, bubble chart, histogram, line graph flying above.
+Provides settings for the globe component that allows to render three-dimensional scatter chart, bar chart or lines.  
 
 ## show(boolean) = true
 
-Whether Earth components.
+Displays globe when true.
 
 ## globeRadius (number) = 100
-Radius of the Earth. With respect to the unit three-dimensional space, with [viewControl.distance] (~ globe.viewControl.distance) correlation.
+Globe radius in the three-dimensional viewport. Globe distance can be changed via [viewControl.distance] (~ globe.viewControl.distance) settings.
 
 {{ use: partial-environment(
     componentType="globe",
-    componentName="地球"
+    componentName="Globe"
 ) }}
 
 ## baseTexture(string|HTMLImageElement|HTMLCanvasElement|EChartsInstance)
 
-The texture of the earth. Support picture path string, Canvas pictures or objects.
+Globe texture, supports image path, HTML image element, HTML canvas element or another echarts instance. 
 
-Also supports direct use as an example echarts texture, echarts examples of mouse action at this time on Earth will be used with the textures have linkage.
+Globe texture becomes fully interactive if another echarts instance is used. 
 
 Example:
 ```js
@@ -52,22 +51,20 @@ BaseTexture: mapChart
 ```
 
 ## heightTexture(string|HTMLImageElement|HTMLCanvasElement)
-
-Highly textured earth. Highly textured may be used [bump mapping] (https://zh.wikipedia.org/wiki/%E5%87%B9%E5%87%B8%E8%B4%B4%E5%9B%BE) represents the earth surface the light and dark detail. FIG following two are used and the effect of the difference between `heightTexture`` heightTexuture` unused.
+Height texture can be provided to render globe surface in three dimensions. Echarts uses [bump mapping] (https://zh.wikipedia.org/wiki/%E5%87%B9%E5%87%B8%E8%B4%B4%E5%9B%BE) which simulates bumps and wrinkles on the surface of an object. Below are two examples, one using heightTexture and another one without heightTexture:  
 
 ![400xauto](~heightmap-enable.png)
 
 ![400xauto](~heightmap-disable.png)
 
 ## displacementTexture(string|HTMLImageElement|HTMLCanvasElement)
+Globe displacement vertext texture with [heightTexture] (~ globe.heightTexture) as default. 
 
-Earth displacement vertex texture, with the default [heightTexture] (~ globe.heightTexture).
-
-Compared to bump mapping, displacement of vertices is vertex displacement made directly from the texture. Effective greater than 0 [displaymentScale] (~ globe.displaymentScale).
+Compared to bump mapping technique, displacement of vertices is calculated directly from the displacement texture. Applicable only when [displaymentScale] (~ globe.displaymentScale) is greater than 0.
 
 ## displacementScale(number) = 0
 
-Earth displacement vertex size. The default is 0, i.e. no displacement, are provided below two FIG different effects `displacementScale`
+Globe displacement vertex size. The default is 0 (no displacement) Below are two `displacementScale` examples: 
 
 <div class="twentytwenty-container" style="width: 700px;">
     <img src="documents/asset/gl/img/displacement-disable.png" width="100%" title="Scale: 0">
@@ -76,7 +73,7 @@ Earth displacement vertex size. The default is 0, i.e. no displacement, are prov
 
 ## displacementQuality(string) = 'medium'
 
-Quality vertex displacement of the Earth. Support provided ` 'low'`,`' medium'`, ` 'high'`,`' ultra'`. Higher quality surface height can show more detail. The following are the effects of different theme of `displacementQuality`
+Quality of vertex displacement. Can be ` 'low'`,`' medium'`, ` 'high'`,`' ultra'`. Higher quality surface shows more detail. Below are examples of different `displacementQuality`:
 
 <div class="twentytwenty-container" style="width: 700px;">
     <img src="documents/asset/gl/img/displacement-low.png" width="100%" title="Low">
@@ -86,33 +83,33 @@ Quality vertex displacement of the Earth. Support provided ` 'low'`,`' medium'`,
 
 {{ use: partial-shading-globe(
     componentType="globe",
-    componentName="地球"
+    componentName="globe"
 ) }}
 
 {{ use: partial-light-globe(
     componentType="globe",
-    componentName="地球"
+    componentName="globe"
 ) }}
 
 {{ use: partial-post-effect(
     componentType="globe",
-    componentName="地球"
+    componentName="globe"
 ) }}
 
 {{ use: partial-temporal-super-sampling(
     componentType="globe",
-    componentName="地球"
+    componentName="globe"
 ) }}
 
 {{ use: partial-view-control(
     componentType="globe",
-    componentName="地球",
+    componentName="globe",
     defaultPanSensitivity=0
 ) }}
 
 ### targetCoord(Array)
 
-Positioning latitude and longitude coordinates of the target. After setting ignored [alpha] (~ globe.viewControl.alpha) and [beta] (~ globe.viewControl.beta).
+Target coordinates (latitude and longitude) of the globe. If set, [alpha] (~ globe.viewControl.alpha) and [beta] (~ globe.viewControl.beta) are ignored. 
 
 
 ```js
@@ -124,28 +121,26 @@ viewControl: {
 
 
 ## layers(Array)
-
-Configuring the Earth's surface layer, you can use the added configuration item clouds, or on [baseTexture] (~ globe.baseTexture) supplemented drawn contour countries like.
+Allows to configure globe's surface layers. Can be use to add additional clouds layer, or to mix another map layer with the [baseTexture] (~ globe.baseTexture) to show country borders and so on. 
 
 ### show(boolean) = true
 
-Whether the layer.
+Shows the layer if true. 
 
 ### type(string) = 'overlay'
 
 Type layer, optionally:
 
 + `'overlay'`
-
-A cover layer on the surface, and the like can be used to display clouds.
+Cover's globe's base texture, can be used to render clouds layer.  
 
 + `'blend'`
 
-With [baseTexture] (~ globe.baseTexture) mixing.
+Blends with [baseTexture] (~ globe.baseTexture).
 
 ### name(string)
 
-Name layer, set layer properties can be used when using setOption name to identify the layer needs to be updated.
+Name of the layer, can be used when updating layer.  
 
 ```js
 chart.setOption({
@@ -161,45 +156,43 @@ chart.setOption({
 
 ### blendTo(string) = 'albedo'
 
-In the [type] (~ globe.layers.type) to ` 'is blend'` valid.
+Applicable when [type] (~ globe.layers.type) is ` 'blend'`.
 
 Optional:
-+ `Albedo` mixed albedo, affected by illumination.
++ `albedo` albedo, affected by illumination.
 
-+ `Emission` mixed self-luminous, light is not affected.
++ `emission` self-luminous, light is not affected.
 
 ### intensity(number) = 1
 
-Mixing intensity.
+Blend intensity.
 
 ### shading(string) = 'lambert'
 
 Coloring effect covering layer, with [globe.shading] (~ globe.shading), supports the ` 'color'`,`' lambert'`, ` 'realistic'`
 
-In the [type] (globe.layers.type) to ` 'is overlay'` valid.
+Applicable when [type] (globe.layers.type) is ` 'overlay'`.
 
 ### distance(number) = null
 
-Distance from the cover layer of the Earth's surface.
+Distance from the layer to the Earth's surface.
 
-In the [type] (~ globe.layers.type) to ` 'is overlay'` valid.
-
+Applicable when [type] (~ globe.layers.type) is `'overlay'`.
 
 ### texture(string|HTMLImageElement|HTMLCanvasElement|EChartsInstance)
 
-Texture layer, to support the image path string, Canvas pictures or objects.
+Layer's texture, supports image path, HTML image element, HTML canvas element or another echarts instance. 
 
-Also supports direct use as an example echarts texture, echarts examples of mouse action at this time on Earth will be used with the textures have linkage.
+Layer's texture becomes fully interactive if another echarts instance is used. 
 
 {{ use: partial-zlevel }}
 
 {{ use: partial-viewport }}
 
-
 {{ target: partial-shading-globe(master=partial-shading) }}
 
 {{ block: shading-compare }}
-Here is the difference between different colored effect
+Below is the difference between different shading effects:
 
 ![250xauto](~globe-shading-color.png)
 ![250xauto](~globe-shading-lambert.png)
@@ -212,7 +205,7 @@ Here is the difference between different colored effect
 {{ block: light-extend }}
 ###${prefix|default("#")} time(Date)
 
-Sunshine time, the system defaults to the current time.
+Sunshine time, the default is the current time.
 
 {{ /block }}
 
