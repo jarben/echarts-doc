@@ -30,7 +30,7 @@ baseTexture: 'asset/earth.jpg'
 
 // Example echarts drawing the world map as a texture
 var canvas = document.createElement('canvas');
-var mapchart = echarts.init (canvas, null, {
+var mapChart = echarts.init (canvas, null, {
     width: 4096, height: 2048
 });
 mapChart.setOption({
